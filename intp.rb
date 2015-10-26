@@ -48,7 +48,7 @@ def analysis_rpg(directory_name)
       l = RpgLine.new(line)
       if l.specificationType == "C" && !(l.isComment) && l.operation == "CALL"
         puts "#{f.path.gsub(".txt", "")} -> #{l.factor2.gsub("'", "")}"
-        $gv.add  f.path.gsub(".txt", "") => l.factor2.gsub("'", "")
+        $gv.add  f.path.gsub(".txt", "") => l.factor2.gsub("'", "").strip
       end
     end
   end

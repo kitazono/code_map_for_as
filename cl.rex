@@ -5,23 +5,26 @@ class ClLexer
 
 rule
 
-# ã‚³ãƒ¡ãƒ³ãƒˆ
+# ƒRƒƒ“ƒg
                 \/\*           { @state = :COMMENT; return }
   :COMMENT      [^\*]+         { return }
   :COMMENT      \*+[^\*\/\n]+  { return }
   :COMMENT      \*+\/          { @state = nil; return }
 
-# CALLæ–‡ 
+# CALL•¶ 
                 CALL           { @state = :CALL; return }
   :CALL         \s+?           { return }
+  :CALL         PGM\(\*\w+\/   { return }
+  :CALL         PGM\(&\w+\/    { return }
+  :CALL         PGM\(\w+\/     { return }
   :CALL         PGM\(          { return }
-  :CALL         \w+            { [:PGM, [lineno, text]] }
-  :CALL         \)             { @state = nil; return }
+  :CALL         \w+            { @state = nil; [:PGM, [lineno, text]] }
+#  :CALL         \)             { @state = nil; return }
 
-# æ”¹è¡Œã€ã‚¹ãƒšãƒ¼ã‚¹
+# ‰üsAƒXƒy[ƒX
   \s+?
 
-# æ–‡å­—ã€æ•°å­—ã€è¨˜å·
+# •¶šA”šA‹L†
   .
 
 end

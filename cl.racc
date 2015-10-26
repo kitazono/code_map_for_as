@@ -5,11 +5,14 @@ class ClParser
 options no_result_var
 
 rule
+  program:
+         |program call
 
-  command   : PGM
+  call   : PGM
                 {
                   @file_name =~ /(.*)\.txt/
                   puts @file_name
+                  p val[0]
                   puts "#{$1} -> #{val[0][1]}" # debug
                   $gv.add  $1 => val[0][1]
                 }
